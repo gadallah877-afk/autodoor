@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الباب الذكي - تحكم بمحلك عبر البلوتوث</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Tajawal for beautiful Arabic typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#2563EB', // Bluetooth Blue
+                        secondary: '#1E40AF',
+                        dark: '#0F172A',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .bluetooth-ping {
+            animation: ping-slow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+        @keyframes ping-slow {
+            75%, 100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white">
+                        <i class="fa-brands fa-bluetooth-b text-xl"></i>
+                    </div>
+                    <span class="font-bold text-2xl text-white" id="nav-logo-text">سمارت جيت</span>
+                </div>
+                <div class="hidden md:flex space-x-8 space-x-reverse">
+                    <a href="#home" class="text-gray-300 hover:text-white font-medium transition">الرئيسية</a>
+                    <a href="#features" class="text-gray-300 hover:text-white font-medium transition">المميزات</a>
+                    <a href="#how-it-works" class="text-gray-300 hover:text-white font-medium transition">كيف يعمل؟</a>
+                </div>
+                <div>
+                    <a href="#contact" class="bg-primary hover:bg-secondary text-white px-6 py-2 rounded-full font-bold transition shadow-lg shadow-blue-500/30">
+                        احجز الآن
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-gradient min-h-screen flex items-center pt-20 relative overflow-hidden">
+        <!-- Background decorative elements -->
+        <div class="absolute top-20 right-10 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+        <div class="absolute bottom-20 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="text-right text-white space-y-6">
+                    <span class="inline-block py-1 px-3 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/30 text-sm font-semibold">
+                        <i class="fa-solid fa-bolt mr-1 ml-1"></i> المستقبل لأبواب المحلات
+                    </span>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
+                        تحكم في باب محلك التجاري <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-l from-blue-400 to-cyan-300">بلمسة من هاتفك</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed max-w-lg">
+                        وداعاً للمفاتيح الضائعة والريموت كنترول التقليدي. نظامنا الذكي يحول أبواب الرولينج شتر إلى أبواب ذكية تفتح وتغلق بالبلوتوث بأمان تام وسهولة مطلقة.
+                    </p>
+                    <div class="pt-4 flex gap-4">
+                        <a href="#contact" class="bg-primary hover:bg-blue-600 text-white px-8 py-3 rounded-full font-bold text-lg transition flex items-center gap-2 shadow-lg shadow-blue-500/40">
+                            اطلب النظام الآن <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                        <a href="#features" class="glass-panel text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-white/10 transition">
+                            اكتشف المزيد
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Graphic (Illustration) -->
+                <div class="relative flex justify-center items-center h-96 lg:h-[500px]">
+                    <div class="relative w-full max-w-sm animate-float">
+                        <!-- Mobile Mockup -->
+                        <div class="bg-gray-900 rounded-[2.5rem] border-[8px] border-gray-800 shadow-2xl h-[450px] w-[220px] mx-auto relative overflow-hidden flex flex-col items-center pt-8">
+                            <!-- Screen Content -->
+                            <div class="w-full h-full bg-gradient-to-b from-gray-800 to-gray-900 px-4 pt-12 text-center relative">
+                                <h3 class="text-white font-bold mb-8">سمارت جيت</h3>
+                                <!-- Bluetooth Button -->
+                                <div class="relative inline-block mt-4">
+                                    <div class="absolute inset-0 bg-blue-500 rounded-full bluetooth-ping"></div>
+                                    <button class="relative w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.6)] text-white text-4xl border-4 border-gray-800 z-10">
+                                        <i class="fa-brands fa-bluetooth-b"></i>
+                                    </button>
+                                </div>
+                                <p class="text-blue-400 mt-6 font-medium">جاري الاتصال بالباب...</p>
+                                
+                                <!-- Fake door status -->
+                                <div class="absolute bottom-10 left-4 right-4 bg-gray-800 rounded-xl p-4 border border-gray-700 text-right">
+                                    <p class="text-gray-400 text-xs">الحالة</p>
+                                    <p class="text-green-400 font-bold flex items-center gap-2 justify-end">
+                                        متصل ومغلق <i class="fa-solid fa-lock"></i>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Curve -->
+        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+            <svg class="relative block w-full h-[50px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,130.9,132.7,203.49,118,244.47,110.15,283.43,87.6,321.39,56.44Z" fill="#f9fafb"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section id="features" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">لماذا تختار نظامنا الذكي؟</h2>
+                <p class="text-gray-600 text-lg">صممنا هذا النظام خصيصاً ليحل مشاكل الأبواب التقليدية ويوفر لك أقصى درجات الراحة والأمان.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-right">
+                <!-- Feature 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-primary text-2xl mb-6">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">تحكم من الهاتف</h3>
+                    <p class="text-gray-600">افتح وأغلق باب محلك بلمسة زر من تطبيق الهاتف عبر البلوتوث، دون الحاجة للإنترنت.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                    <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center text-green-600 text-2xl mb-6">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">أمان عالي</h3>
+                    <p class="text-gray-600">نظام تشفير قوي يمنع أي محاولة لاختراق الإشارة أو نسخها كما يحدث في الريموت التقليدي.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 text-2xl mb-6">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">لا للمفاتيح الضائعة</h3>
+                    <p class="text-gray-600">تخلص من مشكلة ضياع المفاتيح أو تلف الريموت وتكاليف استخراج نسخ جديدة باستمرار.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                    <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 text-2xl mb-6">
+                        <i class="fa-solid fa-screwdriver-wrench"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">سهولة التركيب</h3>
+                    <p class="text-gray-600">يتم دمج جهازنا مع ماكينة الرولينج شتر الحالية بسهولة وبدون الحاجة لتغيير الباب بأكمله.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">كيف يعمل النظام؟</h2>
+                <p class="text-gray-600 text-lg">بخطوات بسيطة جداً، يتحول باب محلك إلى باب ذكي.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Line connecting steps (visible on desktop) -->
+                <div class="hidden md:block absolute top-1/2 right-0 left-0 h-1 bg-gray-200 -translate-y-1/2 z-0"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10 text-center">
+                    <!-- Step 1 -->
+                    <div class="bg-white p-6">
+                        <div class="w-20 h-20 mx-auto bg-primary text-white rounded-full flex items-center justify-center text-3xl font-bold border-8 border-white shadow-lg mb-6">
+                            1
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900 mb-2">تركيب الجهاز</h4>
+                        <p class="text-gray-600">نقوم بتوصيل وحدة التحكم الذكية بلوحة موتور الباب (الرولينج شتر) الخاص بك.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="bg-white p-6">
+                        <div class="w-20 h-20 mx-auto bg-primary text-white rounded-full flex items-center justify-center text-3xl font-bold border-8 border-white shadow-lg mb-6">
+                            2
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900 mb-2">تحميل التطبيق</h4>
+                        <p class="text-gray-600">قم بتحميل تطبيقنا المخصص على هاتفك المحمول (متوفر للأندرويد والآيفون).</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-white p-6">
+                        <div class="w-20 h-20 mx-auto bg-primary text-white rounded-full flex items-center justify-center text-3xl font-bold border-8 border-white shadow-lg mb-6">
+                            3
+                        </div>
+                        <h4 class="text-xl font-bold text-gray-900 mb-2">الاقتران والتحكم</h4>
+                        <p class="text-gray-600">اربط هاتفك بالجهاز عبر البلوتوث لمرة واحدة، وابدأ بالتحكم بباب محلك بضغطة زر.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-gray-900 text-white relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-gray-800 rounded-3xl p-8 md:p-12 shadow-2xl border border-gray-700">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-white mb-4">احصل على النظام لمحلك التجاري</h2>
+                    <p class="text-gray-400">سجل بياناتك الآن وسنقوم بالتواصل معك لتحديد موعد المعاينة والتركيب.</p>
+                </div>
+
+                <form id="leadForm" class="space-y-6 text-right">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-300 mb-2 text-sm">الاسم بالكامل</label>
+                            <input type="text" id="fullName" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" placeholder="مثال: أحمد محمد">
+                        </div>
+                        <div>
+                            <label class="block text-gray-300 mb-2 text-sm">رقم الهاتف (الواتساب)</label>
+                            <input type="tel" id="phoneNumber" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" placeholder="01xxxxxxxxx">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-300 mb-2 text-sm">اسم المحل التجاري / النشاط</label>
+                        <input type="text" id="shopName" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" placeholder="مثال: سوبر ماركت الأمل">
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-300 mb-2 text-sm">ملاحظات أو استفسارات (اختياري)</label>
+                        <textarea id="notes" rows="3" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" placeholder="اكتب أي استفسار هنا..."></textarea>
+                    </div>
+
+                    <button type="submit" id="submitBtn" class="w-full bg-primary hover:bg-blue-600 text-white font-bold py-4 rounded-lg transition duration-300 flex justify-center items-center gap-2">
+                        <span>إرسال الطلب</span>
+                        <i id="btnIcon" class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+
+                <!-- Success Message Container (Hidden by default) -->
+                <div id="successMessage" class="hidden flex-col items-center justify-center text-center py-10">
+                    <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center text-4xl mb-4">
+                        <i class="fa-solid fa-check"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">تم استلام طلبك بنجاح!</h3>
+                    <p class="text-gray-400">سيتواصل معك فريقنا الهندسي في أقرب وقت ممكن.</p>
+                    <button onclick="resetForm()" class="mt-6 text-primary hover:text-white underline transition">إرسال طلب آخر</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-950 text-gray-400 py-10 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <i class="fa-brands fa-bluetooth-b text-primary"></i>
+                <span class="font-bold text-white">سمارت جيت</span>
+            </div>
+            <p>&copy; 2026 جميع الحقوق محفوظة. نظام التحكم الذكي.</p>
+            <div class="flex gap-4 text-xl">
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            const logoText = document.getElementById('nav-logo-text');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-white', 'shadow-md');
+                nav.classList.remove('py-2');
+                logoText.classList.replace('text-white', 'text-gray-900');
+                
+                // Change links color on scroll
+                document.querySelectorAll('nav a:not([href="#contact"])').forEach(el => {
+                    el.classList.replace('text-gray-300', 'text-gray-600');
+                    el.classList.replace('hover:text-white', 'hover:text-primary');
+                });
+            } else {
+                nav.classList.remove('bg-white', 'shadow-md');
+                nav.classList.add('py-2');
+                logoText.classList.replace('text-gray-900', 'text-white');
+                
+                document.querySelectorAll('nav a:not([href="#contact"])').forEach(el => {
+                    el.classList.replace('text-gray-600', 'text-gray-300');
+                    el.classList.replace('hover:text-primary', 'hover:text-white');
+                });
+            }
+        });
+
+        // Form reset logic
+        function resetForm() {
+            document.getElementById('leadForm').reset();
+            document.getElementById('leadForm').classList.remove('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+            document.getElementById('successMessage').classList.remove('flex');
+        }
+    </script>
+
+    <script type="module">
+        // استيراد مكتبات Firebase من CDN مدعوم ومتوافق مع بيئة العمل
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // إعدادات Firebase الخاصة بك
+        const firebaseConfig = {
+            apiKey: "AIzaSyAvf5zl5XKNIbzSCz-XCXpwdNgtXEI6MtE",
+            authDomain: "landing-6c2eb.firebaseapp.com",
+            projectId: "landing-6c2eb",
+            storageBucket: "landing-6c2eb.firebasestorage.app",
+            messagingSenderId: "282045656677",
+            appId: "1:282045656677:web:3d6d6f145f4757a371208c",
+            measurementId: "G-WCJK60RP9R"
+        };
+
+        // تهيئة Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // متغيرات بيئة التطبيق (App ID) لضمان التوافق مع هيكلة قواعد البيانات
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'smart-door-landing';
+
+        // متغير لتخزين حالة تسجيل الدخول
+        let isAuthenticated = false;
+
+        // تسجيل دخول مجهول لضمان وجود صلاحيات للكتابة في قاعدة البيانات (خطوة أمنية هامة)
+        signInAnonymously(auth)
+            .then(() => {
+                console.log("Firebase Auth: Connected Successfully");
+                isAuthenticated = true;
+            })
+            .catch((error) => {
+                console.error("Auth Error:", error);
+            });
+
+        // التعامل مع نموذج الإرسال
+        const form = document.getElementById('leadForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnIcon = document.getElementById('btnIcon');
+        const btnText = submitBtn.querySelector('span');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // التأكد من تسجيل الدخول قبل الإرسال
+            if (!isAuthenticated && !auth.currentUser) {
+                console.error("Please wait for authentication to complete.");
+                // يمكننا محاولة تسجيل الدخول مرة أخرى هنا إذا لزم الأمر
+                return;
+            }
+
+            // تغيير شكل الزر لإظهار حالة التحميل
+            const originalText = btnText.innerText;
+            btnText.innerText = "جاري الإرسال...";
+            btnIcon.className = "fa-solid fa-circle-notch fa-spin";
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            // جمع البيانات من الحقول
+            const leadData = {
+                fullName: document.getElementById('fullName').value,
+                phoneNumber: document.getElementById('phoneNumber').value,
+                shopName: document.getElementById('shopName').value,
+                notes: document.getElementById('notes').value || "",
+                createdAt: serverTimestamp(),
+                status: "new" // حالة الطلب الافتراضية
+            };
+
+            try {
+                // حفظ البيانات في Firestore
+                // ملاحظة: تم استخدام مسار يتوافق مع القواعد الأمنية للبيئة الحالية
+                // في مشروعك الفعلي (خارج هذه البيئة)، يمكنك استخدام: collection(db, "leads")
+                const leadsCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'leads');
+                
+                await addDoc(leadsCollectionRef, leadData);
+
+                // إخفاء النموذج وإظهار رسالة النجاح
+                form.classList.add('hidden');
+                const successMsg = document.getElementById('successMessage');
+                successMsg.classList.remove('hidden');
+                successMsg.classList.add('flex');
+
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                // إظهار رسالة خطأ داخلية (بدون alert)
+                const errorDiv = document.createElement('div');
+                errorDiv.className = "text-red-400 text-sm mt-4 text-center w-full";
+                errorDiv.innerText = "حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.";
+                form.appendChild(errorDiv);
+                
+                // إزالة رسالة الخطأ بعد 3 ثواني
+                setTimeout(() => errorDiv.remove(), 3000);
+            } finally {
+                // إعادة الزر لحالته الطبيعية
+                btnText.innerText = originalText;
+                btnIcon.className = "fa-solid fa-paper-plane";
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        });
+    </script>
+</body>
+</html>
