@@ -350,9 +350,7 @@
     </script>
 
     <script type="module">
-        // استيراد مكتبات Firebase من CDN مدعوم ومتوافق مع بيئة العمل
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // إعدادات Firebase الخاصة بك
@@ -366,26 +364,10 @@
             measurementId: "G-WCJK60RP9R"
         };
 
-        // تهيئة Firebase
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // متغيرات بيئة التطبيق (App ID) لضمان التوافق مع هيكلة قواعد البيانات
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'smart-door-landing';
-
-        // متغير لتخزين حالة تسجيل الدخول
-        let isAuthenticated = false;
-
-        // تسجيل دخول مجهول لضمان وجود صلاحيات للكتابة في قاعدة البيانات (خطوة أمنية هامة)
-        signInAnonymously(auth)
-            .then(() => {
-                console.log("Firebase Auth: Connected Successfully");
-                isAuthenticated = true;
-            })
-            .catch((error) => {
-                console.error("Auth Error:", error);
-            });
+        console.log("✅ تم الاتصال بنجاح بالنسخة الجديدة (بدون Auth)");
 
         // التعامل مع نموذج الإرسال
         const form = document.getElementById('leadForm');
@@ -395,13 +377,6 @@
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-
-            // التأكد من تسجيل الدخول قبل الإرسال
-            if (!isAuthenticated && !auth.currentUser) {
-                console.error("Please wait for authentication to complete.");
-                // يمكننا محاولة تسجيل الدخول مرة أخرى هنا إذا لزم الأمر
-                return;
-            }
 
             // تغيير شكل الزر لإظهار حالة التحميل
             const originalText = btnText.innerText;
@@ -421,10 +396,8 @@
             };
 
             try {
-                // حفظ البيانات في Firestore
-                // ملاحظة: تم استخدام مسار يتوافق مع القواعد الأمنية للبيئة الحالية
-                // في مشروعك الفعلي (خارج هذه البيئة)، يمكنك استخدام: collection(db, "leads")
-                const leadsCollectionRef = collection(db, 'artifacts', appId, 'public', 'data', 'leads');
+                // حفظ البيانات في مجموعة "leads" في قاعدة بياناتك
+                const leadsCollectionRef = collection(db, 'leads');
                 
                 await addDoc(leadsCollectionRef, leadData);
 
@@ -436,14 +409,22 @@
 
             } catch (error) {
                 console.error("Error adding document: ", error);
-                // إظهار رسالة خطأ داخلية (بدون alert)
+                
+                // إظهار رسالة خطأ داخلية 
                 const errorDiv = document.createElement('div');
-                errorDiv.className = "text-red-400 text-sm mt-4 text-center w-full";
-                errorDiv.innerText = "حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.";
+                errorDiv.className = "text-red-400 text-sm mt-4 text-center w-full bg-red-900/20 py-2 rounded-lg";
+                
+                // توضيح سبب الخطأ الشائع (مشكلة الصلاحيات)
+                if (error.code === 'permission-denied') {
+                    errorDiv.innerText = "لا يوجد صلاحيات كافية (Permission Denied). يرجى التأكد من أن قواعد Firestore (Security Rules) تسمح بالكتابة.";
+                } else {
+                    errorDiv.innerText = "حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.";
+                }
+                
                 form.appendChild(errorDiv);
                 
-                // إزالة رسالة الخطأ بعد 3 ثواني
-                setTimeout(() => errorDiv.remove(), 3000);
+                // إزالة رسالة الخطأ بعد 5 ثواني
+                setTimeout(() => errorDiv.remove(), 5000);
             } finally {
                 // إعادة الزر لحالته الطبيعية
                 btnText.innerText = originalText;
