@@ -17,7 +17,7 @@ A full-stack IoT automation platform built to control and monitor physical acces
 * **Secure Data Management:** Implements robust database interactions to prevent unauthorized access while maintaining a high volume of requests.
 
 ## Project Demo 📸
-*(If you have a video of the door opening/closing, or a screenshot of the web page, drag and drop it here!)*
+<img width="1600" height="1200" alt="WhatsApp Image 2026-08-25 at 5 12 07 AM" src="https://github.com/user-attachments/assets/1680895c-094c-4e78-8406-c7d6c54709f6" />
 
 ## Live Website 🌐
 [Click here to view and test the Web Application Interface](https://gadallah877-afk.github.io/autodoor/)
