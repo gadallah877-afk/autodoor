@@ -353,17 +353,18 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // إعدادات Firebase الخاصة بك
-        const firebaseConfig = {
-            apiKey: "AIzaSyAvf5zl5XKNIbzSCz-XCXpwdNgtXEI6MtE",
-            authDomain: "landing-6c2eb.firebaseapp.com",
-            projectId: "landing-6c2eb",
-            storageBucket: "landing-6c2eb.firebasestorage.app",
-            messagingSenderId: "282045656677",
-            appId: "1:282045656677:web:3d6d6f145f4757a371208c",
-            measurementId: "G-WCJK60RP9R"
-        };
 
+        
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY_HERE",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.firebasestorage.app",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+        
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
